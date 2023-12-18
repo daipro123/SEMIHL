@@ -1,0 +1,347 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+<style>
+
+    .video-container {
+        max-width: 1500px;
+        margin: 0 auto;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .product-card {
+        transition: transform 0.9s;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card img {
+        object-fit: cover;
+    }
+
+    .product-card .card-body {
+        padding: 10px;
+    }
+
+    .product-card .card-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .product-card .card-text {
+        font-size: 14px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .product-card .action {
+        text-align: center;
+    }
+
+    .product-card .card-footer {
+        padding: 10px;
+        background-color: #f5f5f5;
+    }
+
+    .addToCartBtn {
+        display: block;
+        margin: 0 auto;
+        background-color: black;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    .addToCartBtn:hover {
+        background-color: #333;
+    }
+
+    .product-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(calc(16.6667% - 20px), 1fr));
+        grid-gap: 20px;
+    }
+
+    .product-card .card-img-top {
+        height: 150px;
+        object-fit: contain;
+        max-width: 100%;
+    }
+
+    .slider {
+        width: 100%;
+        height: 550px;
+        position: relative;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .slide {
+        width: 100%;
+        height: 100%;
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: opacity 0.5s ease-in-out;
+        border-radius: 15px;
+    }
+
+    .slide.active {
+        display: block;
+    }
+
+    .slider-controls {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+
+
+    .slider-controls button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        outline: none;
+        padding: 5px;
+        margin: 0 3px;
+        font-size: 20px;
+        color: #fff;
+    }
+
+    .slider-controls button.active {
+        color: #ff0000;
+    }
+
+    .progress-container {
+        position: relative;
+        width: 100%;
+        /* Đảm bảo thanh tiến trình chiếm toàn bộ chiều rộng của container */
+    }
+
+    .progress {
+        height: 3px;
+        margin-bottom: 20px;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+    }
+
+    .progress-bar {
+        height: 100%;
+        background-color: #5b8501;
+    }
+
+    .category-button {
+        background-color: #7db702;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        padding: 10px 20px;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1; /* Đặt z-index để button ở phía trên thanh tiến trình */
+    }
+
+    .sidebar {
+        width: 30%;
+        box-sizing: border-box;
+        padding: 20px;
+        background-color: #f1f1f1;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        margin-right: 20px;
+        flex: 0 0 30%; /* Adjust the flex value based on your layout */
+    }
+
+    .slider-wrapper {
+        flex: 1;
+    }
+
+    .sidebar h2 {
+        font-size: 17px;
+        text-align: center;
+        color: #fff;
+        background-color: #7db702;
+        border-radius: 15px;
+        padding: 10px;
+    }
+
+
+    .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .sidebar li {
+        margin-bottom: 10px;
+    }
+
+   .hi {
+        display: flex;
+        
+    }
+
+    .sidebar {
+        flex-basis: 30%;
+        box-sizing: border-box;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        margin-right: 20px;
+    }
+
+.slider-wrapper {
+    flex-basis: 70%; 
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+.sidebar .category-container {
+    border: 0.1px solid #ddd; /* Màu viền của khung */
+    border-radius: 8px; /* Độ cong của góc khung */
+    padding: 10px; /* Khoảng cách bên trong khung */
+    display: flex;
+    align-items: center;
+  
+    width: 100%
+    
+}
+.sidebar li {
+    margin-bottom: 10px;
+    display: flex; /* Sử dụng flex để căn giữa icon và văn bản */
+    align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+.sidebar .category-item {
+    margin-bottom: 10px;
+}
+
+.sidebar .choose-icon {
+    margin-right: 5px; /* Khoảng cách giữa icon và văn bản */
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #000;
+}
+
+.sidebar a:hover {
+    color: #7db702;
+}
+
+
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <br>
+    <div class="hi">
+        <div class="sidebar">
+            <h2>DANH MỤC</h2>
+            <br>
+            <ul>
+                {% for category in categories %}
+    <li class="category-item">
+        <div class="category-container">
+           <img src="{{ asset('Icon/choose.svg') }}" alt="Choose Icon" class="choose-icon">
+           <a href="#">{{ category.getName() }}</a>
+        </div>
+    </li>
+{% endfor %}
+
+            </ul>
+        </div>
+
+        <div class="slider-wrapper">
+            <div class="slider">
+                <img class="slide active" src="{{ asset('Image/slider_1.webp') }}">
+                <img class="slide" src="{{ asset('Image/slider_2.webp') }}">
+                <img class="slide" src="{{ asset('Image/slider_3.webp') }}">
+                <img class="slide" src="{{ asset('Image/slider_4.webp') }}">
+                <div class="slider-controls">
+                    <button class="control" onclick="prevSlide()">&#10094;</button>
+                    <button class="control" onclick="nextSlide()">&#10095;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% for category in categories %}
+    <br>
+    <br>
+    <div class="progress-container">
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <button class="category-button">{{ category.name }}
+</button>
+    </div>
+    <br>
+    <br>
+
+    <div class="product-container">
+       {% for product in category.products %}
+
+        <a class="card product-card" href="{{ urlGenerator.generate('app_productdetail', {'id': product.getId()}) }}">
+        
+            <img src="{{ asset('image/' ~ product.getImage()) }}" class="card-img-top" alt="{{ product.getName() }}">
+            <div class="card-body">
+                <h6 class="card-title"  >{{ product.getName() }}</h6>
+                <p class="card-text" style="color: #7db702;"> Price: {{ product.getPrice() }}</p>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+    
+    {% endfor %}
+
+    <script>
+        var slides = document.querySelectorAll('.slide');
+        var currentSlide = 0;
+        var slideInterval = setInterval(nextSlide, 4000);
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function prevSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+    </script>
+</div>
+
+    
+{% endblock %}

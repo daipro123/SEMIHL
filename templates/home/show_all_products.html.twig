@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <br>
+        <h2>Tất cả sản phẩm</h2>
+        <br>
+
+        <div class="product-container">
+            {% for category in categories %}
+                {% for product in category.products %}
+                    <a class="card product-card" href="{{ urlGenerator.generate('app_productdetail', {'id': product.getId()}) }}">
+                        <img src="{{ asset('image/' ~ product.getImage()) }}" class="card-img-top" alt="{{ product.getName() }}">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ product.getName() }}</h6>
+                            <p class="card-text" style="color: #7db702;"> Price: {{ product.getPrice() }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+    </div>
+    <br>
+
+  
+    <br>
+{% endblock %}

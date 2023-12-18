@@ -1,0 +1,88 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .no-records {
+            font-style: italic;
+            color: #888;
+        }
+
+        .create-new {
+            display: block;
+            width: 100px;
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>User index</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Username</th>
+                    <th>Roles</th>
+                    <th>Password</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                    <td>{{ user.password }}</td>
+                    <td class="actions">
+                        <a href="{{ path('app_user_show', {'id': user.id}) }}">Show</a>
+                       
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5" class="no-records">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+       
+    </div>
+{% endblock %}

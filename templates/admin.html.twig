@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    <link rel="stylesheet" href="https://bootswatch.com/5/zephyr/bootstrap.min.css">
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        <style>
+            .navbar-nav {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+            }
+            
+            .nav-link {
+                padding: 0 10px;
+            }
+            
+            .container-fluid {
+                justify-content: center;
+            }
+
+            .divider {
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+                border: none;
+                border-top: 1px solid #eee;
+            }
+
+            .badge-cart {
+                background-color: orange;
+                color: white;
+                font-size: 18px;
+            }
+
+            .search-form {
+                display: flex;
+                align-items: center;
+            }
+
+            .search-input {
+                margin-right: 10px;
+            }
+
+            .footer {
+                background-color: #f8f9fa;
+                padding: 30px 0;
+            }
+
+            .footer .row {
+                margin-top: 20px;
+            }
+
+            .footer h5 {
+                margin-bottom: 20px;
+            }
+
+            .footer ul {
+                padding-left: 0;
+                list-style: none;
+            }
+
+            .footer li {
+                margin-bottom: 10px;
+            }
+
+            .navbar {
+                background-color: #ffff; /* Choose your preferred color */
+            }
+
+            .navbar-brand {
+                margin-right: 50px; /* Adjust as needed for spacing */
+            }
+
+            .navbar-nav {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+            }
+
+            .nav-item {
+                margin: 0 20px;
+            }
+
+            .login-btn {
+                margin-left: auto;
+            }
+        </style>
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+
+{% block header %}
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ path('app_admin') }}">
+                <img src="https://ibrand.vn/wp-content/uploads/2022/10/logo-shop-giay-11.jpg" alt="logo1" style="width: 150px;">
+            </a>
+
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <!-- Management buttons in the center -->
+                    <li class="nav-item">
+                        <a class="btn btn-outline-primary" href="{{ path('app_product_index') }}">Product Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class=" btn btn-outline-primary" href="{{ path('app_category_index') }}">Category Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-primary" href="{{ path('app_user_index') }}">User Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-primary" href="{{ path('app_contact_index') }}">Feedback Management</a>
+                    </li>
+                </ul>
+
+                <!-- Login/logout button on the right -->
+                <form class="login-btn">
+                    <a class="btn btn-primary my-2 my-sm-0" href="/{{ app.user ? 'logout' : 'login' }}" @click="isOpen = false">
+                        {{ app.user ? 'logout' : 'login'}}
+                    </a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <hr class="divider">
+</body>
+{% endblock %}
+
+{% block body %}{% endblock %}
+
+<hr class="divider">
+
+</html>

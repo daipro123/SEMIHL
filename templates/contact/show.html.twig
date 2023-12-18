@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .back-link, .edit-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .back-link {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .back-link:hover {
+            background-color: #45a049;
+        }
+
+        .edit-link {
+            background-color: #008CBA;
+            color: white;
+        }
+
+        .edit-link:hover {
+            background-color: #0077A3;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Contact</h1>
+
+        <table>
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ contact.id }}</td>
+                </tr>
+                <tr>
+                    <th>First Name</th>
+                    <td>{{ contact.firstName }}</td>
+                </tr>
+                <tr>
+                    <th>Last Name</th>
+                    <td>{{ contact.lastName }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ contact.email }}</td>
+                </tr>
+                <tr>
+                    <th>Phone Number</th>
+                    <td>{{ contact.phoneNumber }}</td>
+                </tr>
+                <tr>
+                    <th>Title Name</th>
+                    <td>{{ contact.titleName }}</td>
+                </tr>
+                <tr>
+                    <th>Note</th>
+                    <td>{{ contact.note }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_contact_index') }}" class="back-link">Back to list</a>
+
+
+        {{ include('contact/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

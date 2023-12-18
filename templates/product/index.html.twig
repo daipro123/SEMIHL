@@ -1,0 +1,95 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Product index{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            max-width: 50px;
+            max-height: 50px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .no-records {
+            font-style: italic;
+            color: #888;
+        }
+
+        .create-new {
+            display: block;
+            width: 100px;
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Product index</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price }}</td>
+                    <td><img src="{{ asset('Image/' ~ product.image) }}" alt="{{ product.name }}"></td>
+                    <td>{{ product.description }}</td>
+                    <td class="actions">
+                        <a href="{{ path('app_product_show', {'id': product.id}) }}">Show</a>
+                        <a href="{{ path('app_product_edit', {'id': product.id}) }}">Edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="no-records">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_product_new') }}" class="create-new">Create new</a>
+    </div>
+{% endblock %}
